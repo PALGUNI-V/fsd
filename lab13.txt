@@ -1,0 +1,169 @@
+# =========================
+# models.py
+# =========================
+from django.db import models
+
+class Alumni(models.Model):
+    name = models.CharField(max_length=100)
+    usn = models.CharField(max_length=20)
+    passing_year = models.IntegerField()
+    company = models.CharField(max_length=100)
+
+
+# =========================
+# forms.py
+# =========================
+from django import forms
+from .models import Alumni
+
+class AlumniForm(forms.ModelForm):
+    class Meta:
+        model = Alumni
+        fields = ['name','usn','passing_year','company']
+
+
+class YearForm(forms.Form):
+    passing_year = forms.IntegerField()
+
+
+# =========================
+# views.py
+# =========================
+from django.shortcuts import render
+from .models import Alumni
+from .forms import AlumniForm, YearForm
+
+def home(request):
+    if request.method == 'POST':
+        form = AlumniForm(request.POST)
+        if form.is_valid():
+            form.save()
+    else:
+        form = AlumniForm()
+    return render(request, 'home.html', {'form': form})
+
+
+def filter_year(request):
+    if request.method == 'POST':
+        form = YearForm(request.POST)
+        if form.is_valid():
+            year = form.cleaned_data['passing_year']
+            alumni = Alumni.objects.filter(passing_year=year)
+            return render(request, 'list.html', {'alumni': alumni})
+    else:
+        form = YearForm()
+    return render(request, 'filter.html', {'form': form})
+
+
+# =========================
+# alumniapp/urls.py
+# =========================
+from django.urls import path
+from . import views
+
+urlpatterns = [
+    path('', views.home, name='home'),
+    path('filter/', views.filter_year, name='filter'),
+]
+
+
+# =========================
+# lab13/urls.py
+# =========================
+from django.contrib import admin
+from django.urls import path, include
+
+urlpatterns = [
+    path('admin/', admin.site.urls),
+    path('', include('alumniapp.urls')),
+]
+
+
+# =========================
+# settings.py (ADD THIS)
+# =========================
+# 'alumniapp',
+
+
+# =========================
+# templates/home.html
+# =========================
+"""
+<!DOCTYPE html>
+<html>
+<body>
+
+<h2>Add Alumni</h2>
+
+<form method="post">
+    {% csrf_token %}
+    {{ form.as_p }}
+    <button type="submit">Save</button>
+</form>
+
+<br>
+
+<a href="{% url 'filter' %}">Filter by Year</a>
+
+</body>
+</html>
+"""
+
+
+# =========================
+# templates/filter.html
+# =========================
+"""
+<!DOCTYPE html>
+<html>
+<body>
+
+<h2>Select Passing Year</h2>
+
+<form method="post">
+    {% csrf_token %}
+    {{ form.as_p }}
+    <button type="submit">Show</button>
+</form>
+
+</body>
+</html>
+"""
+
+
+# =========================
+# templates/list.html
+# =========================
+"""
+<!DOCTYPE html>
+<html>
+<body>
+
+<h2>Alumni List</h2>
+
+<table border="1">
+<tr>
+    <th>Name</th>
+    <th>USN</th>
+    <th>Year</th>
+    <th>Company</th>
+</tr>
+
+{% for a in alumni %}
+<tr>
+    <td>{{ a.name }}</td>
+    <td>{{ a.usn }}</td>
+    <td>{{ a.passing_year }}</td>
+    <td>{{ a.company }}</td>
+</tr>
+{% endfor %}
+
+</table>
+
+<br>
+
+<a href="{% url 'home' %}">Back</a>
+
+</body>
+</html>
+"""

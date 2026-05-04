@@ -1,0 +1,134 @@
+# =========================
+# models.py
+# =========================
+from django.db import models
+
+class Placement(models.Model):
+    usn = models.CharField(max_length=20)
+    name = models.CharField(max_length=100)
+    company = models.CharField(max_length=100)
+
+
+# =========================
+# forms.py
+# =========================
+from django import forms
+from .models import Placement
+
+class PlacementForm(forms.ModelForm):
+    class Meta:
+        model = Placement
+        fields = ['usn', 'name', 'company']
+
+
+# =========================
+# views.py
+# =========================
+from django.shortcuts import render
+from .models import Placement
+from .forms import PlacementForm
+
+def home(request):
+    if request.method == 'POST':
+        form = PlacementForm(request.POST)
+        if form.is_valid():
+            form.save()
+    else:
+        form = PlacementForm()
+    return render(request, 'home.html', {'form': form})
+
+
+def amazon_students(request):
+    students = Placement.objects.filter(company='Amazon')
+    return render(request, 'list.html', {'students': students})
+
+
+# =========================
+# placementapp/urls.py
+# =========================
+from django.urls import path
+from . import views
+
+urlpatterns = [
+    path('', views.home, name='home'),
+    path('list/', views.amazon_students, name='list'),
+]
+
+
+# =========================
+# lab10/urls.py
+# =========================
+from django.contrib import admin
+from django.urls import path, include
+
+urlpatterns = [
+    path('admin/', admin.site.urls),
+    path('', include('placementapp.urls')),
+]
+
+
+# =========================
+# settings.py (ADD THIS)
+# =========================
+# 'placementapp',
+
+
+# =========================
+# templates/home.html
+# =========================
+"""
+<!DOCTYPE html>
+<html>
+<body>
+
+<h2>Add Placement</h2>
+
+<form method="post">
+    {% csrf_token %}
+    {{ form.as_p }}
+    <button type="submit">Save</button>
+</form>
+
+<br>
+
+<a href="{% url 'list' %}">View Amazon Students</a>
+
+</body>
+</html>
+"""
+
+
+# =========================
+# templates/list.html
+# =========================
+"""
+<!DOCTYPE html>
+<html>
+<body>
+
+<h2>Students placed in Amazon</h2>
+
+<table border="1">
+<tr>
+    <th>USN</th>
+    <th>Name</th>
+    <th>Company</th>
+</tr>
+
+{% for s in students %}
+<tr>
+    <td>{{ s.usn }}</td>
+    <td>{{ s.name }}</td>
+    <td>{{ s.company }}</td>
+</tr>
+{% endfor %}
+
+</table>
+
+<br>
+
+<a href="{% url 'home' %}">Back</a>
+
+</body>
+</html>
+"""

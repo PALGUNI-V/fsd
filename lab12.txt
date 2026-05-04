@@ -1,0 +1,172 @@
+# =========================
+# models.py
+# =========================
+from django.db import models
+
+class Student(models.Model):
+    name = models.CharField(max_length=100)
+    usn = models.CharField(max_length=20)
+    department = models.CharField(max_length=50)
+    grade = models.CharField(max_length=2)
+
+
+# =========================
+# forms.py
+# =========================
+from django import forms
+from .models import Student
+
+class StudentForm(forms.ModelForm):
+    class Meta:
+        model = Student
+        fields = ['name','usn','department','grade']
+
+
+class UpdateForm(forms.Form):
+    name = forms.CharField(max_length=100)
+    grade = forms.CharField(max_length=2)
+
+
+# =========================
+# views.py
+# =========================
+from django.shortcuts import render
+from .models import Student
+from .forms import StudentForm, UpdateForm
+
+def home(request):
+    if request.method == 'POST':
+        form = StudentForm(request.POST)
+        if form.is_valid():
+            form.save()
+    else:
+        form = StudentForm()
+    return render(request, 'home.html', {'form': form})
+
+
+def update_grade(request):
+    if request.method == 'POST':
+        form = UpdateForm(request.POST)
+        if form.is_valid():
+            name = form.cleaned_data['name']
+            grade = form.cleaned_data['grade']
+            Student.objects.filter(name=name).update(grade=grade)
+            students = Student.objects.all()
+            return render(request, 'list.html', {'students': students})
+    else:
+        form = UpdateForm()
+    return render(request, 'update.html', {'form': form})
+
+
+# =========================
+# studentapp/urls.py
+# =========================
+from django.urls import path
+from . import views
+
+urlpatterns = [
+    path('', views.home, name='home'),
+    path('update/', views.update_grade, name='update'),
+]
+
+
+# =========================
+# lab12/urls.py
+# =========================
+from django.contrib import admin
+from django.urls import path, include
+
+urlpatterns = [
+    path('admin/', admin.site.urls),
+    path('', include('studentapp.urls')),
+]
+
+
+# =========================
+# settings.py (ADD THIS)
+# =========================
+# 'studentapp',
+
+
+# =========================
+# templates/home.html
+# =========================
+"""
+<!DOCTYPE html>
+<html>
+<body>
+
+<h2>Add Student</h2>
+
+<form method="post">
+    {% csrf_token %}
+    {{ form.as_p }}
+    <button type="submit">Save</button>
+</form>
+
+<br>
+
+<a href="{% url 'update' %}">Update Grade</a>
+
+</body>
+</html>
+"""
+
+
+# =========================
+# templates/update.html
+# =========================
+"""
+<!DOCTYPE html>
+<html>
+<body>
+
+<h2>Update Grade</h2>
+
+<form method="post">
+    {% csrf_token %}
+    {{ form.as_p }}
+    <button type="submit">Update</button>
+</form>
+
+</body>
+</html>
+"""
+
+
+# =========================
+# templates/list.html
+# =========================
+"""
+<!DOCTYPE html>
+<html>
+<body>
+
+<h2>Updated Students</h2>
+
+<table border="1">
+<tr>
+    <th>Name</th>
+    <th>USN</th>
+    <th>Department</th>
+    <th>Grade</th>
+</tr>
+
+{% for s in students %}
+<tr>
+    <td>{{ s.name }}</td>
+    <td>{{ s.usn }}</td>
+    <td>{{ s.department }}</td>
+    <td>{{ s.grade }}</td>
+</tr>
+{% endfor %}
+
+</table>
+
+<br>
+
+<a href="{% url 'home' %}">Back</a>
+
+</body>
+</html>
+"""

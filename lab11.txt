@@ -1,0 +1,137 @@
+# =========================
+# models.py
+# =========================
+from django.db import models
+
+class Faculty(models.Model):
+    fid = models.CharField(max_length=20)
+    title = models.CharField(max_length=50)
+    name = models.CharField(max_length=100)
+    branch = models.CharField(max_length=50)
+
+
+# =========================
+# forms.py
+# =========================
+from django import forms
+from .models import Faculty
+
+class FacultyForm(forms.ModelForm):
+    class Meta:
+        model = Faculty
+        fields = ['fid', 'title', 'name', 'branch']
+
+
+# =========================
+# views.py
+# =========================
+from django.shortcuts import render
+from .models import Faculty
+from .forms import FacultyForm
+
+def home(request):
+    if request.method == 'POST':
+        form = FacultyForm(request.POST)
+        if form.is_valid():
+            form.save()
+    else:
+        form = FacultyForm()
+    return render(request, 'home.html', {'form': form})
+
+
+def filter_faculty(request):
+    faculty = Faculty.objects.filter(branch='CSE', title='Professor')
+    return render(request, 'list.html', {'faculty': faculty})
+
+
+# =========================
+# facultyapp/urls.py
+# =========================
+from django.urls import path
+from . import views
+
+urlpatterns = [
+    path('', views.home, name='home'),
+    path('list/', views.filter_faculty, name='list'),
+]
+
+
+# =========================
+# lab11/urls.py
+# =========================
+from django.contrib import admin
+from django.urls import path, include
+
+urlpatterns = [
+    path('admin/', admin.site.urls),
+    path('', include('facultyapp.urls')),
+]
+
+
+# =========================
+# settings.py (ADD THIS)
+# =========================
+# 'facultyapp',
+
+
+# =========================
+# templates/home.html
+# =========================
+"""
+<!DOCTYPE html>
+<html>
+<body>
+
+<h2>Add Faculty</h2>
+
+<form method="post">
+    {% csrf_token %}
+    {{ form.as_p }}
+    <button type="submit">Save</button>
+</form>
+
+<br>
+
+<a href="{% url 'list' %}">View CSE Professors</a>
+
+</body>
+</html>
+"""
+
+
+# =========================
+# templates/list.html
+# =========================
+"""
+<!DOCTYPE html>
+<html>
+<body>
+
+<h2>CSE Professors</h2>
+
+<table border="1">
+<tr>
+    <th>ID</th>
+    <th>Title</th>
+    <th>Name</th>
+    <th>Branch</th>
+</tr>
+
+{% for f in faculty %}
+<tr>
+    <td>{{ f.fid }}</td>
+    <td>{{ f.title }}</td>
+    <td>{{ f.name }}</td>
+    <td>{{ f.branch }}</td>
+</tr>
+{% endfor %}
+
+</table>
+
+<br>
+
+<a href="{% url 'home' %}">Back</a>
+
+</body>
+</html>
+"""
