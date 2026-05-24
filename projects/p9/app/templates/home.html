@@ -1,0 +1,63 @@
+<h2>Student Form</h2>
+
+<form action="/save/" method="POST">
+
+{% csrf_token %}
+
+<input
+type="text"
+name="name"
+placeholder="Name">
+
+<br><br>
+
+<input
+type="text"
+name="usn"
+placeholder="USN">
+
+<br><br>
+
+<select name="grade">
+
+<option>A</option>
+
+<option>B</option>
+
+<option>C</option>
+
+<option>O</option>
+
+</select>
+
+<br><br>
+
+<button type="submit">
+
+Save
+
+</button>
+
+</form>
+
+<br>
+
+<a href="/display/">
+
+<button>
+
+Display O Grade
+
+</button>
+
+</a>
+
+<a href="/displayall/">
+
+<button>
+
+Display All
+
+</button>
+
+</a>

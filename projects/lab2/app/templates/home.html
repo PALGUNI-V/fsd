@@ -1,0 +1,46 @@
+<!DOCTYPE html>
+
+<html>
+
+<head>
+
+<title>XSS Demo</title>
+
+</head>
+
+<body>
+
+<h2>XSS Vulnerability and Prevention</h2>
+
+<form method="POST">
+
+{% csrf_token %}
+
+<label>Enter Name:</label>
+
+<input type="text"
+name="name">
+
+<button type="submit">
+
+Submit
+
+</button>
+
+</form>
+
+<br>
+
+<h3>Unsafe Output:</h3>
+
+{{name|safe}}
+
+<br><br>
+
+<h3>Safe Output:</h3>
+
+{{safe_name}}
+
+</body>
+
+</html>

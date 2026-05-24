@@ -1,0 +1,53 @@
+<!DOCTYPE html>
+
+<html>
+
+<head>
+
+<title>Weather App</title>
+
+</head>
+
+<body>
+
+<h2>Live Weather Information</h2>
+
+<form method="POST">
+
+{% csrf_token %}
+
+<label>Enter City:</label>
+
+<input type="text"
+name="city">
+
+<button type="submit">
+
+Search
+
+</button>
+
+</form>
+
+<br>
+
+{% if weather %}
+
+<h3>City : {{weather.city}}</h3>
+
+<h3>Temperature : {{weather.temp}} °C</h3>
+
+<h3>Description : {{weather.desc}}</h3>
+
+{% endif %}
+
+
+{% if error %}
+
+<h3>{{error}}</h3>
+
+{% endif %}
+
+</body>
+
+</html>

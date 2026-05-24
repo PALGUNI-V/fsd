@@ -1,0 +1,56 @@
+<h2>Placement Form</h2>
+
+<form action="/save/" method="POST">
+
+{% csrf_token %}
+
+<input
+type="text"
+name="usn"
+placeholder="USN">
+
+<br><br>
+
+<input
+type="text"
+name="name"
+placeholder="Name">
+
+<br><br>
+
+<input
+type="text"
+name="company"
+placeholder="Company">
+
+<br><br>
+
+<button type="submit">
+
+Save
+
+</button>
+
+</form>
+
+<br>
+
+<a href="/display/">
+
+<button>
+
+Display Amazon Students
+
+</button>
+
+</a>
+
+<a href="/displayall/">
+
+<button>
+
+Display All
+
+</button>
+
+</a>

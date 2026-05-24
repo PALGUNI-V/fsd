@@ -1,0 +1,45 @@
+<h2>Alumni Details</h2>
+
+<table border="1">
+
+<tr>
+
+<th>Name</th>
+
+<th>USN</th>
+
+<th>Passing Year</th>
+
+<th>Company</th>
+
+</tr>
+
+{% for i in alumni %}
+
+<tr>
+
+<td>{{i.name}}</td>
+
+<td>{{i.usn}}</td>
+
+<td>{{i.year}}</td>
+
+<td>{{i.company}}</td>
+
+</tr>
+
+{% endfor %}
+
+</table>
+
+<br>
+
+<a href="/">
+
+<button>
+
+Back
+
+</button>
+
+</a>

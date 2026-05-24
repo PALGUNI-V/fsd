@@ -1,0 +1,76 @@
+<!DOCTYPE html>
+
+<html>
+
+<head>
+
+<script src="https://code.jquery.com/jquery-3.7.1.min.js"></script>
+
+</head>
+
+<body>
+
+<h2>Feedback Form</h2>
+
+<input type="text"
+id="name"
+placeholder="Name">
+
+<br><br>
+
+<textarea
+id="feedback"
+placeholder="Feedback">
+</textarea>
+
+<br><br>
+
+<button id="btn">
+
+Submit
+
+</button>
+
+<hr>
+
+<div id="result">
+
+</div>
+
+
+<script>
+
+$("input,textarea").focus(function(){
+
+$(this).css(
+"background",
+"yellow"
+);
+
+});
+
+
+$("#btn").click(function(){
+
+var n=$("#name").val();
+
+var f=$("#feedback").val();
+
+$("#result").append(
+
+"<div>"+n+" : "+f+"</div>"
+
+);
+
+$("div:odd").css(
+"background",
+"lightblue"
+);
+
+});
+
+</script>
+
+</body>
+
+</html>

@@ -1,0 +1,76 @@
+<h2>Alumni Form</h2>
+
+<form action="/save/" method="POST">
+
+{% csrf_token %}
+
+<input
+type="text"
+name="name"
+placeholder="Name">
+
+<br><br>
+
+<input
+type="text"
+name="usn"
+placeholder="USN">
+
+<br><br>
+
+<input
+type="number"
+name="year"
+placeholder="Passing Year">
+
+<br><br>
+
+<input
+type="text"
+name="company"
+placeholder="Company">
+
+<br><br>
+
+<button type="submit">
+
+Save
+
+</button>
+
+</form>
+
+<hr>
+
+<h3>Select Year</h3>
+
+<form action="/display/" method="POST">
+
+{% csrf_token %}
+
+<input
+type="number"
+name="year"
+placeholder="Year">
+
+<br><br>
+
+<button type="submit">
+
+Display Year
+
+</button>
+
+</form>
+
+<br>
+
+<a href="/displayall/">
+
+<button>
+
+Display All
+
+</button>
+
+</a>

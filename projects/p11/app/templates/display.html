@@ -1,0 +1,45 @@
+<h2>Faculty Details</h2>
+
+<table border="1">
+
+<tr>
+
+<th>ID</th>
+
+<th>Title</th>
+
+<th>Name</th>
+
+<th>Branch</th>
+
+</tr>
+
+{% for i in faculty %}
+
+<tr>
+
+<td>{{i.fid}}</td>
+
+<td>{{i.title}}</td>
+
+<td>{{i.name}}</td>
+
+<td>{{i.branch}}</td>
+
+</tr>
+
+{% endfor %}
+
+</table>
+
+<br>
+
+<a href="/">
+
+<button>
+
+Back
+
+</button>
+
+</a>

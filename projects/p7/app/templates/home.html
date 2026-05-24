@@ -1,0 +1,66 @@
+<h2>Student Form</h2>
+
+<form action="/save/" method="POST">
+
+{% csrf_token %}
+
+<input
+type="text"
+name="name"
+placeholder="Name">
+
+<br><br>
+
+<input
+type="text"
+name="usn"
+placeholder="USN">
+
+<br><br>
+
+<input
+type="number"
+name="semester"
+placeholder="Semester">
+
+<br><br>
+
+<select name="status">
+
+<option>Paid</option>
+
+<option>Not Paid</option>
+
+</select>
+
+<br><br>
+
+<button type="submit">
+
+Save
+
+</button>
+
+</form>
+
+<br>
+
+<a href="/delete/">
+
+<button>
+
+Delete Unpaid
+
+</button>
+
+</a>
+
+<a href="/displayall/">
+
+<button>
+
+Display All
+
+</button>
+
+</a>

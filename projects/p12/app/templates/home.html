@@ -1,0 +1,83 @@
+<h2>Student Form</h2>
+
+<form action="/save/" method="POST">
+
+{% csrf_token %}
+
+<input
+type="text"
+name="name"
+placeholder="Name">
+
+<br><br>
+
+<input
+type="text"
+name="usn"
+placeholder="USN">
+
+<br><br>
+
+<input
+type="text"
+name="department"
+placeholder="Department">
+
+<br><br>
+
+<input
+type="text"
+name="grade"
+placeholder="Grade">
+
+<br><br>
+
+<button type="submit">
+
+Save
+
+</button>
+
+</form>
+
+<hr>
+
+<h3>Update Grade</h3>
+
+<form action="/update/" method="POST">
+
+{% csrf_token %}
+
+<input
+type="text"
+name="name"
+placeholder="Student Name">
+
+<br><br>
+
+<input
+type="text"
+name="newgrade"
+placeholder="New Grade">
+
+<br><br>
+
+<button type="submit">
+
+Update
+
+</button>
+
+</form>
+
+<br>
+
+<a href="/displayall/">
+
+<button>
+
+Display All
+
+</button>
+
+</a>

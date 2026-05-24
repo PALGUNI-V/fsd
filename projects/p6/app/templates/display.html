@@ -1,0 +1,45 @@
+<h2>Student Details</h2>
+
+<table border="1">
+
+<tr>
+
+<th>USN</th>
+
+<th>Name</th>
+
+<th>Subject</th>
+
+<th>CIE</th>
+
+</tr>
+
+{% for i in students %}
+
+<tr>
+
+<td>{{i.usn}}</td>
+
+<td>{{i.name}}</td>
+
+<td>{{i.subject}}</td>
+
+<td>{{i.cie}}</td>
+
+</tr>
+
+{% endfor %}
+
+</table>
+
+<br>
+
+<a href="/">
+
+<button>
+
+Back
+
+</button>
+
+</a>

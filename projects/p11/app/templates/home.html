@@ -1,0 +1,73 @@
+<h2>Faculty Form</h2>
+
+<form action="/save/" method="POST">
+
+{% csrf_token %}
+
+<input
+type="text"
+name="fid"
+placeholder="Faculty ID">
+
+<br><br>
+
+<select name="title">
+
+<option>Professor</option>
+
+<option>Assistant Professor</option>
+
+<option>Associate Professor</option>
+
+</select>
+
+<br><br>
+
+<input
+type="text"
+name="name"
+placeholder="Name">
+
+<br><br>
+
+<select name="branch">
+
+<option>CSE</option>
+
+<option>ECE</option>
+
+<option>ISE</option>
+
+</select>
+
+<br><br>
+
+<button type="submit">
+
+Save
+
+</button>
+
+</form>
+
+<br>
+
+<a href="/display/">
+
+<button>
+
+Display CSE Professors
+
+</button>
+
+</a>
+
+<a href="/displayall/">
+
+<button>
+
+Display All
+
+</button>
+
+</a>

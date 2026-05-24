@@ -1,0 +1,59 @@
+<h2>Student Form</h2>
+
+<form method="POST">
+
+{% csrf_token %}
+
+<input type="text"
+name="usn"
+placeholder="USN">
+
+<br><br>
+
+<input type="text"
+name="name"
+placeholder="Name">
+
+<br><br>
+
+<input type="text"
+name="subject"
+placeholder="Subject">
+
+<br><br>
+
+<input type="number"
+name="cie"
+placeholder="CIE">
+
+<br><br>
+
+<button type="submit">
+
+Save
+
+</button>
+
+</form>
+
+<br>
+
+<a href="/display/">
+
+<button>
+
+Display CIE<20
+
+</button>
+
+</a>
+
+<a href="/displayall/">
+
+<button>
+
+Display All
+
+</button>
+
+</a>

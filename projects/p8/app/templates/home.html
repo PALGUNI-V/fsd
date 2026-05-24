@@ -1,0 +1,76 @@
+<h2>Employee Form</h2>
+
+<form action="/save/" method="POST">
+
+{% csrf_token %}
+
+<input
+type="text"
+name="name"
+placeholder="Employee Name">
+
+<br><br>
+
+<input
+type="email"
+name="email"
+placeholder="Email">
+
+<br><br>
+
+<input
+type="text"
+name="phone"
+placeholder="Phone">
+
+<br><br>
+
+<input
+type="date"
+name="date">
+
+<br><br>
+
+<input
+type="text"
+name="job"
+placeholder="Job Title">
+
+<br><br>
+
+<input
+type="number"
+name="salary"
+placeholder="Salary">
+
+<br><br>
+
+<button type="submit">
+
+Save
+
+</button>
+
+</form>
+
+<br>
+
+<a href="/display/">
+
+<button>
+
+Salary >50000
+
+</button>
+
+</a>
+
+<a href="/displayall/">
+
+<button>
+
+Display All
+
+</button>
+
+</a>
